@@ -13,6 +13,15 @@
         
         <link rel="stylesheet" href="leaflet.css" />
         <script src="leaflet.js"></script>
+        <style>
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		html, body, #map {
+			height: 100%;
+		}
+	</style>
     </head>
     <body id="body">
 
@@ -366,9 +375,9 @@
         </script>
         <script>
 
-		var map = L.map('map').setView([41.375553,2.149284], 13);
+		//var map = L.map('map').setView([41.375553,2.149284], 13);
 
-                //var map = L.map('map');
+                var map = L.map('map');
 
 		L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
 			maxZoom: 18,
@@ -406,7 +415,7 @@
 			var radius = e.accuracy / 2;
 
 			L.marker(e.latlng).addTo(map)
-				.bindPopup("You are within " + radius + " meters from this point").openPopup();
+				.bindPopup("Usted está alrededor de " + radius + " metros de este punto").openPopup();
 
 			L.circle(e.latlng, radius).addTo(map);
 		}
