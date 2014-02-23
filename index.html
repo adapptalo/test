@@ -3,7 +3,6 @@
     <head>
         <title></title>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <script src="cordova.js"></script>
         <script src="Plugins/Child%20Browser/childbrowser.js"></script>
         <script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
@@ -12,8 +11,8 @@
         <link href="kendo/styles/kendo.indexedlistview.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
         
-<script src="leaflet.js"></script>
-    <link href="leaflet.css" rel="stylesheet" />
+<script src="leaflet/leaflet.js"></script>
+    <link href="leaflet/leaflet.css" rel="stylesheet" />
 
     <!--
     <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
@@ -304,9 +303,10 @@
              <!--<button  style="width:49px;height:50px; right:50%;bottom:0;z-index:3;position: absolute;left:50%; background-color: transparent; border: none;background-image: url('Images/find.png') !important; background-repeat: no-repeat; background-position: center; box-shadow:10px 10px 5px #888888; " onclick="mostrarPosicion();" class='km-button'></button> -->
 
         </div>
-        <div data-role="view" data-layout="about-layout" id="map-view" data-stretch="true" data-title="Contacto">
-            <div id="map_canvas" style="width:400px; height:400px"></div>
-             
+        <div data-role="view" data-layout="about-layout" data-init="map_init" id="map-view" data-stretch="true" data-title="Contacto">
+            <div id="map_canvas" style="width: 100%; height: 100%;z-index:2; position: absolute"></div>
+             <button  style="width:49px;height:50px; right:50%;bottom:0;z-index:3;position: absolute;left:50%; background-color: transparent; border: none;background-image: url('Images/find.png') !important; background-repeat: no-repeat; background-position: center; box-shadow:10px 10px 5px #888888; " onclick="mostrarPosicion();" class='km-button'></button> 
+
         </div>
          <!--<div data-role="view" data-layout="about-layout" id="map" style="width: 600px; height: 400px"></div>-->
 
@@ -388,7 +388,6 @@
             <div>#=Quantity# at #=kendo.toString(UnitPrice, "c")# each</div>
         </script>
         <script>
-         
                /* var map = L.map('map').setView([41.375553,2.149284], 13);
 
                 //var map = L.map('map');
@@ -515,15 +514,15 @@
                 function onDeviceReady() {
                 //alert("deviceready listo!!")
                      navigator.geolocation.getCurrentPosition(onSuccess, onError);
-                    
-                   
+
+    
                 }
 
                 function onSuccess(position) {
 
-                    alert("geo: "+position.coords.latitude+","+position.coords.longitude);
+                    console.log("geo: "+position.coords.latitude+","+position.coords.longitude);
 
-                    var map = L.map('map_canvas').setView([position.coords.latitude, position.coords.longitude], 14);
+                    var map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 14);
 
                     L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
@@ -535,12 +534,17 @@
 
                 }
 
+                // onError Callback receives a PositionError object
+
+                //
+
                 function onError(error) {
 
-                   alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+                   console.log('code: '    + error.code    + '\n' +
+
+                          'message: ' + error.message + '\n');
 
                 }
-                
                 function mostrarPosicion(){
                     navigator.geolocation.getCurrentPosition(lecturaExitosa, error , {enableHighAccuracy: true } );
                 }
