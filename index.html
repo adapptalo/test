@@ -402,7 +402,7 @@
             map.on('zoomend', function() {
                 $('#currentzoom').html('Current Zoom: ' + map.getZoom());
             });
-
+            map.invalidateSize();
                /* var map = L.map('map').setView([41.375553,2.149284], 13);
 
                 //var map = L.map('map');
