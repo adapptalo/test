@@ -294,7 +294,7 @@
              <!--<button  style="width:49px;height:50px; right:50%;bottom:0;z-index:3;position: absolute;left:50%; background-color: transparent; border: none;background-image: url('Images/find.png') !important; background-repeat: no-repeat; background-position: center; box-shadow:10px 10px 5px #888888; " onclick="mostrarPosicion();" class='km-button'></button> -->
 
         </div>
-        <div data-role="view" data-layout="about-layout" data-init="buildMap" id="map-view" data-stretch="true" data-title="Contacto">
+        <div data-role="view" data-layout="about-layout" data-init="map_init" id="map-view" data-stretch="true" data-title="Contacto">
             <div id="map_canvas" style="width: 100%; height: 100%;z-index:2; position: absolute"></div>
              <button  style="width:49px;height:50px; right:50%;bottom:0;z-index:3;position: absolute;left:50%; background-color: transparent; border: none;background-image: url('Images/find.png') !important; background-repeat: no-repeat; background-position: center; box-shadow:10px 10px 5px #888888; " onclick="mostrarPosicion();" class='km-button'></button> 
 
@@ -437,6 +437,24 @@
 	</script>
        
         <script>
+            var map_init = function(){
+
+                    map = undefined
+                    $('#map_canvas').height($("body").height())
+                    var map = L.map('map_canvas').setView([51.505, -0.09], 18);
+
+                    L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+                        //attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+                        maxZoom: 18
+                    }).addTo(map);
+
+                    var circle = L.circle([51.508, -0.11], 500, {
+                        color: 'red',
+                        fillColor: '#f03',
+                        fillOpacity: 0.5
+                    }).addTo(map);
+
+                }
                 //var app = new kendo.mobile.Application(document.body);
 
                 //initialize the google map
