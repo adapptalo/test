@@ -291,7 +291,7 @@
         <!-- hook up to the init event of the view and initialize the google map -->
         <div data-role="view" data-layout="about-layout" data-init="buildMap2" id="map-view" data-title="Contacto">
             <div id="map" style="width: 100%; height: 100%;z-index:2; position: absolute"></div>
-             <button  style="width:49px;height:50px; right:50%;bottom:0;z-index:3;position: absolute;left:50%; background-color: transparent; border: none;background-image: url('Images/find.png') !important; background-repeat: no-repeat; background-position: center; box-shadow:10px 10px 5px #888888; " onclick="mostrarPosicion();" class='km-button'></button>
+             <!--<button  style="width:49px;height:50px; right:50%;bottom:0;z-index:3;position: absolute;left:50%; background-color: transparent; border: none;background-image: url('Images/find.png') !important; background-repeat: no-repeat; background-position: center; box-shadow:10px 10px 5px #888888; " onclick="mostrarPosicion();" class='km-button'></button> -->
 
         </div>
         <div data-role="view" data-layout="about-layout" id="map" style="width: 600px; height: 400px"></div>
@@ -374,10 +374,9 @@
             <div>#=Quantity# at #=kendo.toString(UnitPrice, "c")# each</div>
         </script>
         <script>
-             function buildMap2(e) {
-		//var map = L.map('map').setView([41.375553,2.149284], 13);
+                var map = L.map('map').setView([41.375553,2.149284], 13);
 
-                var map = L.map('map');
+                //var map = L.map('map');
 
 		L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
 			maxZoom: 18,
@@ -410,7 +409,8 @@
 		}
 
 		map.on('click', onMapClick);*/
-
+ function buildMap2(e) {
+ 
                 function onLocationFound(e) {
 			var radius = e.accuracy / 2;
 
@@ -427,7 +427,7 @@
 		map.on('locationerror', onLocationError);
 
 		map.locate({setView: true, maxZoom: 16});
-           }
+}      
 	</script>
        
         <script>
