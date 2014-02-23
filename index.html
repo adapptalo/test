@@ -305,9 +305,8 @@
 
         </div>
         <div data-role="view" data-layout="about-layout" id="map-view" data-stretch="true" data-title="Contacto">
-            <div id="map_canvas" style="width: 100%; height: 100%;"></div>
-             <button  style="width:49px;height:50px; right:50%;bottom:0;z-index:3;position: absolute;left:50%; background-color: transparent; border: none;background-image: url('Images/find.png') !important; background-repeat: no-repeat; background-position: center; box-shadow:10px 10px 5px #888888; " onclick="mostrarPosicion();" class='km-button'></button> 
-
+            <div id="map_canvas" style="width:400px; height:400px"></div>
+             
         </div>
          <!--<div data-role="view" data-layout="about-layout" id="map" style="width: 600px; height: 400px"></div>-->
 
@@ -389,6 +388,21 @@
             <div>#=Quantity# at #=kendo.toString(UnitPrice, "c")# each</div>
         </script>
         <script>
+            L.Browser.retina = true;
+
+            function getCloudMadeUrl(styleId) {
+                return 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/' + styleId + '/256/{z}/{x}/{y}.png';
+            }
+            var cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+                cloudmade = new L.TileLayer(getCloudMadeUrl(997), {attribution: cloudmadeAttribution, detectRetina: true, maxZoom: 18}),
+                cloudmade2 = new L.TileLayer(getCloudMadeUrl(998), {attribution: 'Hello world'});
+
+            var map = new L.Map('map_canvas').addLayer(cloudmade).setView(new L.LatLng(50.5, 30.51), 15);
+
+            map.on('zoomend', function() {
+                $('#currentzoom').html('Current Zoom: ' + map.getZoom());
+            });
+
                /* var map = L.map('map').setView([41.375553,2.149284], 13);
 
                 //var map = L.map('map');
