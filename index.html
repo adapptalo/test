@@ -532,13 +532,13 @@
 
                     console.log("geo: "+position.coords.latitude+","+position.coords.longitude);
 
-                    var map = L.map('map_canvas').setView([position.coords.latitude, position.coords.longitude], 14);
+                    /*var map = L.map('map_canvas').setView([position.coords.latitude, position.coords.longitude], 14);
 
                     L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
                             maxZoom: 18
 
-                    }).addTo(map);
+                    }).addTo(map);*/
 
                     L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
 
