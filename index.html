@@ -303,7 +303,7 @@
              <!--<button  style="width:49px;height:50px; right:50%;bottom:0;z-index:3;position: absolute;left:50%; background-color: transparent; border: none;background-image: url('Images/find.png') !important; background-repeat: no-repeat; background-position: center; box-shadow:10px 10px 5px #888888; " onclick="mostrarPosicion();" class='km-button'></button> -->
 
         </div>
-        <div data-role="view" data-layout="about-layout" data-show="showMap" id="map-view" data-stretch="true" data-title="Contacto">
+        <div data-role="view" data-layout="about-layout" id="map-view" data-stretch="true" data-title="Contacto">
             <div id="map_canvas" style="width: 100%; height: 100%;z-index:2; position: absolute"></div>
              <button  style="width:49px;height:50px; right:50%;bottom:0;z-index:3;position: absolute;left:50%; background-color: transparent; border: none;background-image: url('Images/find.png') !important; background-repeat: no-repeat; background-position: center; box-shadow:10px 10px 5px #888888; " onclick="mostrarPosicion();" class='km-button'></button> 
 
@@ -388,7 +388,7 @@
             <div>#=Quantity# at #=kendo.toString(UnitPrice, "c")# each</div>
         </script>
         <script>
-                var map = L.map('map').setView([41.375553,2.149284], 13);
+                var map = L.map('map_canvas').setView([41.375553,2.149284], 13);
 
                 //var map = L.map('map');
 
@@ -424,7 +424,7 @@
 
 		map.on('click', onMapClick);*/
  
-  function showMap(e) {
+  
                 function onLocationFound(e) {
 			var radius = e.accuracy / 2;
 
@@ -442,7 +442,6 @@
 
 		//map.locate({setView: true, maxZoom: 16});
                 map.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
-}
 	</script>
        
         <script>
