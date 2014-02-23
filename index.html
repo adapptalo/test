@@ -303,7 +303,7 @@
              <!--<button  style="width:49px;height:50px; right:50%;bottom:0;z-index:3;position: absolute;left:50%; background-color: transparent; border: none;background-image: url('Images/find.png') !important; background-repeat: no-repeat; background-position: center; box-shadow:10px 10px 5px #888888; " onclick="mostrarPosicion();" class='km-button'></button> -->
 
         </div>
-        <div data-role="view" data-layout="about-layout" data-init="map_init" id="map-view" data-stretch="true" data-title="Contacto">
+        <div data-role="view" data-layout="about-layout" id="map-view" data-stretch="true" data-title="Contacto">
             <div id="map_canvas" style="width: 100%; height: 100%;z-index:2; position: absolute"></div>
              <button  style="width:49px;height:50px; right:50%;bottom:0;z-index:3;position: absolute;left:50%; background-color: transparent; border: none;background-image: url('Images/find.png') !important; background-repeat: no-repeat; background-position: center; box-shadow:10px 10px 5px #888888; " onclick="mostrarPosicion();" class='km-button'></button> 
 
@@ -513,8 +513,33 @@
                 //
                 function onDeviceReady() {
                 //alert("deviceready listo!!")
+                     navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+    
                 }
 
+                function onSuccess(position) {
+
+                    alert("geo: "+position.coords.latitude+","+position.coords.longitude);
+
+                    var map = L.map('map_canvas').setView([position.coords.latitude, position.coords.longitude], 14);
+
+                    L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+                            maxZoom: 18
+
+                    }).addTo(map);
+
+                    L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
+
+                }
+
+                function onError(error) {
+
+                   alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+
+                }
+                
                 function mostrarPosicion(){
                     navigator.geolocation.getCurrentPosition(lecturaExitosa, error , {enableHighAccuracy: true } );
                 }
