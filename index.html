@@ -529,36 +529,14 @@
                 // Cordova esta disponible!
                 //
                 function onDeviceReady() {
-                alert("deviceready listo!!")
+                    alert("deviceready listo!!")
                      navigator.geolocation.getCurrentPosition(onSuccess, onError);
-                     initMap();
+                    
                 }
 
-                var map, layer;
-                function initMap(){
-                    map = new OpenLayers.Map( 'map');
-                    layer = new OpenLayers.Layer.OSM( "Simple OSM Map");
-                    map.addLayer(layer);
-                    map.setCenter(
-                        new OpenLayers.LonLat(-71.147, 42.472).transform(
-                            new OpenLayers.Projection("EPSG:4326"),
-                            map.getProjectionObject()
-                        ), 12
-                    );    
-                }
                 function onSuccess(position) {
 
-                    console.log("geo: "+position.coords.latitude+","+position.coords.longitude);
-
-                    /*var map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 14);
-
-                    L.tileLayer('http://tile.osm.org/{z}/{x}/{y}.png', {
-
-                            maxZoom: 18
-
-                    }).addTo(map);
-
-                    L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);*/
+                    alert("geo: "+position.coords.latitude+","+position.coords.longitude);
 
                 }
 
@@ -568,7 +546,7 @@
 
                 function onError(error) {
 
-                   console.log('code: '    + error.code    + '\n' +
+                   alert('code: '    + error.code    + '\n' +
 
                           'message: ' + error.message + '\n');
 
