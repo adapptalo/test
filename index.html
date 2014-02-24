@@ -5,7 +5,10 @@
         <meta charset="utf-8" />
         <script src="cordova.js"></script>
         <script src="Plugins/Child%20Browser/childbrowser.js"></script>
-       
+                <!-- bring in the google maps library -->
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+ <script src="http://openlayers.org/dev/OpenLayers.js"></script>
+ 
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
         <link href="kendo/styles/kendo.indexedlistview.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
@@ -515,15 +518,13 @@
                 }
         </script>
         <!-- Scripts -->
-         <!-- bring in the google maps library -->
-        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
- 
+
+        
         <script type="text/javascript">
           
             
         </script>
         <script data-main="scripts/main.js" src="scripts/require.js"></script>
-        <script src="http://openlayers.org/dev/OpenLayers.js"></script>
         <script type="text/javascript">
                 document.addEventListener("deviceready", onDeviceReady, false);
                 // Cordova esta disponible!
