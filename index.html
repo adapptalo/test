@@ -43,7 +43,7 @@
                 }
 	</style>
     </head>
-    <body id="body">
+    <body id="body" onload="init()">
 
         <!-- Home Views -->
 
@@ -531,7 +531,7 @@
                 function onDeviceReady() {
                     alert("deviceready listo!!")
                      navigator.geolocation.getCurrentPosition(onSuccess, onError);
-                    
+                    init();
                 }
 
                 function onSuccess(position) {
@@ -544,6 +544,30 @@
 
                 //
 
+                var map;
+
+                function init() {
+                    map = new OpenLayers.Map({
+                        div: "map_canvas",
+                        theme: null,
+                        projection: new OpenLayers.Projection("EPSG:900913"),
+                        numZoomLevels: 18,
+                        controls: [
+                            new OpenLayers.Control.TouchNavigation({
+                                dragPanOptions: {
+                                    enableKinetic: true
+                                }
+                            }),
+                            new OpenLayers.Control.Zoom()
+                        ],
+                        layers: [
+                            new OpenLayers.Layer.OSM("OpenStreetMap", null, {
+                                transitionEffect: 'resize'
+                            })
+                        ]
+                    });
+                    map.setCenter(new OpenLayers.LonLat(0, 0), 3);
+                }
                 function onError(error) {
 
                    alert('code: '    + error.code    + '\n' +
