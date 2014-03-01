@@ -336,7 +336,7 @@
                 L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(m)
 			.bindPopup("<b>Barcelona Beer Festival</b><br />8, 9 y 10 de Marzo").openPopup();//var layers = [];
                 //layers["OSM"] = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { });
-                function onLocationFound(e) {
+                /*function onLocationFound(e) {
 			var radius = e.accuracy / 2;
 
 			L.marker(e.latlng).addTo(m)
@@ -354,7 +354,7 @@
 
 		m.locate({setView: true, maxZoom: 16});
                 //m.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
-               
+               */
                 //for (var layer in layers) m.addLayer(layers[layer], false);
                 //m.addControl(new L.Control.Layers(layers));
                 $("#map").height($(e.view.element).height() - 45);
