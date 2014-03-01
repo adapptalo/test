@@ -311,6 +311,13 @@
 
        
        <div data-role="view" data-title="Test app" data-layout="about-layout" data-stretch="true" data-init="mainShow" id="map-view">
+            <header data-role="header">
+                <div data-role="navbar">
+                    <a data-align="left" data-role="button"  data-icon="about" href="#lv-about">About</a>
+                    <span data-role="view-title"></span>
+                    <a data-align="right" data-role="button" class="nav-button" href="http://example.net" data-rel="external">Logoff</a>
+                </div>
+            </header>
             <div id="map" style="border-collapse: collapse; width:100%;"></div>
         </div>
         
@@ -332,12 +339,11 @@
                     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
                 L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(m)
-			.bindPopup("<b>Barcelona Beer Festival</b><br />8, 9 y 10 de Marzo").openPopup();
+			.bindPopup("<b>Barcelona Beer Festival</b><br />8, 9 y 10 de Marzo.").openPopup();
                 for (var layer in layers) m.addLayer(layers[layer], false);
                 //m.addControl(new L.Control.Layers(layers));
-                $("#map").height($(e.view.element).height() - 45);
+		$("#map").height($(e.view.element).height() - 45);
                 m.invalidateSize();
-                
             }
         </script>
         <!-- Error Views -->
@@ -519,8 +525,73 @@
                 map.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});*/
 	</script>
        
+        <script>
+            var map_init = function(){
+
+                    map = undefined
+                    $('#map_canvas').height($("body").height())
+                    var map = L.map('map_canvas').setView([51.505, -0.09], 18);
+
+                    L.tileLayer('http://{s}.tile.cloudmade.com/c3f81d74cf5f463783cb692725095176/997/256/{z}/{x}/{y}.png', {
+                        //attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+                        maxZoom: 18
+                    }).addTo(map);
+
+                    var circle = L.circle([51.508, -0.11], 500, {
+                        color: 'red',
+                        fillColor: '#f03',
+                        fillOpacity: 0.5
+                    }).addTo(map);
+
+                }
+                //var app = new kendo.mobile.Application(document.body);
+
+                //initialize the google map
+                var map;
+                var marker;
+                function buildMap(e) {
+                    var myOptions = {
+                        center: new google.maps.LatLng(41.375553,2.149284),
+                        zoom: 15,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+
+                    var mapElement = $("#map");
+                    var container = e.view.content;
+
+                    map = new google.maps.Map(mapElement[0], myOptions);
+                    var latlng = new google.maps.LatLng(41.375553,2.149284);
+
+                    marcador = new google.maps.Marker( {
+                          map:map,
+                          draggable:  false,
+                        animation:  google.maps.Animation.DROP
+                    })
+                    marker = new google.maps.Marker({
+                        map:        map,
+                        draggable:  false,
+                        animation:  google.maps.Animation.DROP,
+                        icon: 'http://www.adapptalo.com/test/icon.png',
+                        position:   latlng
+                    });
+                    google.maps.event.addListener(marker, 'click', toggleBounce);
+
+                }
+                function toggleBounce() {
+                    if (marker.getAnimation() !== null) {
+                      marker.setAnimation(null);
+                    } else {
+                      marker.setAnimation(google.maps.Animation.BOUNCE);
+                    }
+                }
+        </script>
         <!-- Scripts -->
 
+        
+        <script type="text/javascript">
+          
+            
+        </script>
         <script data-main="scripts/main.js" src="scripts/require.js"></script>
         
         <script type="text/javascript">
@@ -528,8 +599,9 @@
                 // Cordova esta disponible!
                 //
                 function onDeviceReady() {
-                    //alert("deviceready listo!!")
-                     //navigator.geolocation.getCurrentPosition(onSuccess, onError);
+                    alert("deviceready listo!!")
+                     navigator.geolocation.getCurrentPosition(onSuccess, onError);
+                     initMap();
                 }
 
                 function onSuccess(position) {
