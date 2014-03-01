@@ -311,13 +311,6 @@
 
        
        <div data-role="view" data-title="Test app" data-layout="about-layout" data-stretch="true" data-init="mainShow" id="map-view">
-            <header data-role="header">
-                <div data-role="navbar">
-                    <a data-align="left" data-role="button"  data-icon="about" href="#lv-about">About</a>
-                    <span data-role="view-title"></span>
-                    <a data-align="right" data-role="button" class="nav-button" href="http://example.net" data-rel="external">Logoff</a>
-                </div>
-            </header>
             <div id="map" style="border-collapse: collapse; width:100%;"></div>
         </div>
         
@@ -327,9 +320,13 @@
             function mainShow(e) {
                 var m = L.map('map');
                 m.setView([41.375553,2.149284], 16);
-                var layers = [];
-                layers["OSM"] = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { });
-                /*function onLocationFound(e) {
+                L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+		}).addTo(m);
+                //var layers = [];
+                //layers["OSM"] = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { });
+                function onLocationFound(e) {
 			var radius = e.accuracy / 2;
 
 			L.marker(e.latlng).addTo(m)
@@ -346,7 +343,7 @@
 
 		m.locate({setView: true, maxZoom: 16});
                 //m.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
-                */
+                
                 var greenIcon = L.icon({
                     iconUrl: 'http://www.adapptalo.com/test/icon.png',
                     //shadowUrl: 'leaf-shadow.png',
@@ -358,7 +355,7 @@
                 });
                 L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(m)
 			.bindPopup("<b>Barcelona Beer Festival</b><br />8, 9 y 10 de Marzo").openPopup();
-                for (var layer in layers) m.addLayer(layers[layer], false);
+                //for (var layer in layers) m.addLayer(layers[layer], false);
                 //m.addControl(new L.Control.Layers(layers));
                 $("#map").height($(e.view.element).height() - 45);
                 m.invalidateSize();
@@ -443,52 +440,8 @@
             <div>#=Quantity# at #=kendo.toString(UnitPrice, "c")# each</div>
         </script>
         <script>
-            function showMap69() {
-
-            navigator.geolocation.getCurrentPosition(
-            onSuccessShowMap,
-            onErrorShowMap
-            );
-
-            }
             
-            function onSuccessShowMap(position) {
-
-            var latlng = new google.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude);
-
-            var mapOptions = {
-
-            sensor: true,
-            center: latlng,
-            panControl: false,
-            zoomControl: true,
-            zoom: 16,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            streetViewControl: false,
-            mapTypeControl: true,
-
-            };
-
-            var map = new google.maps.Map(
-            document.getElementById('map_canvas'),
-            mapOptions
-            );
-
-            var marker = new google.maps.Marker({
-            position: latlng,
-            map: map
-            });
-            console.log(marker);
-            console.log("map rendering");
-            }
-            
-            function onErrorShowMap(error) {
-
-            alert("error");
-            }
-            /*    var map = L.map('map_canvas').setView([41.375553,2.149284], 13);
+                var map = L.map('map_canvas').setView([41.375553,2.149284], 13);
 
                 //var map = L.map('map');
 
@@ -497,9 +450,7 @@
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
 		}).addTo(map);
 
-
-		
-		var greenIcon = L.icon({
+                var greenIcon = L.icon({
                     iconUrl: 'http://www.adapptalo.com/test/icon.png',
                     //shadowUrl: 'leaf-shadow.png',
 
@@ -511,7 +462,7 @@
                 });
 
                 L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(map)
-			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();*/
+			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
 
 		/*var popup = L.popup();
 
@@ -524,7 +475,7 @@
 
 		map.on('click', onMapClick);*/
  
-  /*
+  
                 function onLocationFound(e) {
 			var radius = e.accuracy / 2;
 
@@ -541,7 +492,7 @@
 		map.on('locationerror', onLocationError);
 
 		//map.locate({setView: true, maxZoom: 16});
-                map.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});*/
+                map.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
 	</script>
        
         <!-- Scripts -->
