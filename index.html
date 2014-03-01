@@ -329,7 +329,7 @@
                 m.setView([41.375553,2.149284], 16);
                 var layers = [];
                 layers["OSM"] = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { });
-                function onLocationFound(e) {
+                /*function onLocationFound(e) {
 			var radius = e.accuracy / 2;
 
 			L.marker(e.latlng).addTo(m)
@@ -346,7 +346,7 @@
 
 		m.locate({setView: true, maxZoom: 16});
                 //m.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
-                
+                */
                 var greenIcon = L.icon({
                     iconUrl: 'http://www.adapptalo.com/test/icon.png',
                     //shadowUrl: 'leaf-shadow.png',
