@@ -13,8 +13,8 @@
         <!-- bring in the google maps library -->
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
  
-            <link rel="stylesheet" href="leaflet.css" />
-        <script src="leaflet.js"></script>
+        <link rel="stylesheet" href="leaflet/leaflet.css" />
+        <script src="leaflet/leaflet.js"></script>
     <!--
     <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
     <script src="openlayers/OpenLayers.js?mobile"></script>
@@ -310,7 +310,7 @@
         </div>
 
        
-       <div data-role="view" data-title="Test app" data-layout="about-layout" data-stretch="true" data-show="mainShow" id="map-view">
+       <div data-role="view" data-title="Test app" data-layout="about-layout" data-stretch="true" data-init="mainShow" id="map-view">
             <header data-role="header">
                 <div data-role="navbar">
                     <a data-align="left" data-role="button"  data-icon="about" href="#lv-about">About</a>
