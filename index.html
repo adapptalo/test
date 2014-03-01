@@ -357,8 +357,8 @@
                 m.on('locationfound', onLocationFound);
 		m.on('locationerror', onLocationError);
 
-		//map.locate({setView: true, maxZoom: 16});
-                m.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
+		m.locate({setView: true, maxZoom: 16});
+                //m.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
                 $("#map").height($(e.view.element).height() - 45);
                 m.invalidateSize();
                 
