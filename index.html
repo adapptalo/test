@@ -347,20 +347,20 @@
                  function onLocationFound(e) {
 			var radius = e.accuracy / 2;
 
-			L.marker(e.latlng).addTo(map)
+			L.marker(e.latlng).addTo(m)
 				.bindPopup("Usted está alrededor de " + radius + " metros de este punto").openPopup();
 
-			L.circle(e.latlng, radius).addTo(map);
+			L.circle(e.latlng, radius).addTo(m);
 		}
 
 		function onLocationError(e) {
 			alert(e.message);
 		}
-                map.on('locationfound', onLocationFound);
-		map.on('locationerror', onLocationError);
+                m.on('locationfound', onLocationFound);
+		m.on('locationerror', onLocationError);
 
 		//map.locate({setView: true, maxZoom: 16});
-                map.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
+                m.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
             }
         </script>
         <!-- Error Views -->
