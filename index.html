@@ -333,7 +333,8 @@
                     //shadowAnchor: [4, 62],  // the same for the shadow
                     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
-                //var layers = [];
+                L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(m)
+			.bindPopup("<b>Barcelona Beer Festival</b><br />8, 9 y 10 de Marzo").openPopup();//var layers = [];
                 //layers["OSM"] = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { });
                 function onLocationFound(e) {
 			var radius = e.accuracy / 2;
@@ -342,8 +343,7 @@
 				.bindPopup("Usted está alrededor de " + radius + " metros de este punto").openPopup();
 
 			L.circle(e.latlng, radius).addTo(m);
-                        L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(m)
-			.bindPopup("<b>Barcelona Beer Festival</b><br />8, 9 y 10 de Marzo").openPopup();
+                       L.circle([41.375553,2.149284], {icon: greenIcon}).addTo(m)
 		}
 
 		function onLocationError(e) {
