@@ -338,12 +338,30 @@
                     //shadowAnchor: [4, 62],  // the same for the shadow
                     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
-                L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(m)
+                L.marker([41.375553,2.149284]).addTo(m)
 			.bindPopup("<b>Barcelona Beer Festival</b><br />8, 9 y 10 de Marzo.").openPopup();
                 for (var layer in layers) m.addLayer(layers[layer], false);
                 //m.addControl(new L.Control.Layers(layers));
 		$("#map").height($(e.view.element).height() - 45);
                 m.invalidateSize();
+                
+                function onLocationFound(e) {
+			var radius = e.accuracy / 2;
+
+			L.marker(e.latlng).addTo(m)
+				.bindPopup("Usted está alrededor de " + radius + " metros de este punto").openPopup();
+
+			L.circle(e.latlng, radius).addTo(m);
+		}
+
+		function onLocationError(e) {
+			alert(e.message);
+		}
+                m.on('locationfound', onLocationFound);
+		m.on('locationerror', onLocationError);
+
+		//map.locate({setView: true, maxZoom: 16});
+                m.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
             }
         </script>
         <!-- Error Views -->
