@@ -14,6 +14,15 @@
             -webkit-transform: translate3d(0,0,0);
             -webkit-transform: translateZ(0px);
             }
+            #map {
+                display: none;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+                border: solid 3px #654;
+            }
         </style>
     </head>
     <body>
@@ -192,21 +201,14 @@
 </style>
 
         <div data-role="view" data-title="Test app" data-layout="tabstrip-appearance" data-stretch="true" data-init="mainShow" id="index">
-            <header data-role="header">
-                <div data-role="navbar">
-                    <a data-align="left" data-role="button"  data-icon="about" href="#lv-about">About</a>
-                    <span data-role="view-title"></span>
-                    <a data-align="right" data-role="button" class="nav-button" href="http://example.net" data-rel="external">Logoff</a>
-                </div>
-            </header>
-            <div id="map" style="border-collapse: collapse; width:100%;position: absolute; height: 100%;"></div>
+            <div id="map"></div>
         </div>
         
         <script type="text/javascript">
             var app = new kendo.mobile.Application(document.body, { hideAddressBar: true, loading: '<h1>@LL.Common.WAITING</h1>' });
 
             function mainShow(e) {
-                var m = L.map('map');
+                /*var m = L.map('map');
                 m.setView([55.179, 61.356], 15);
                 var layers = [];
                 layers["OSM"] = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { });
@@ -214,7 +216,20 @@
                 for (var layer in layers) m.addLayer(layers[layer], false);
                 m.addControl(new L.Control.Layers(layers));
 		$("#map").height($(e.view.element).height() - 45);
-                m.invalidateSize();
+                m.invalidateSize();*/
+                var map = L.map('map');
+
+                L.tileLayer(
+                  'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  {maxZoom: 18}
+                ).addTo(map);
+
+                map.setView([44.06, -121.31], 10);
+
+                document.getElementById('map').style.display = 'block';
+
+                // Uncommenting  this line causes map to render properly
+                map.invalidateSize();
             }
         </script>
     </body>
