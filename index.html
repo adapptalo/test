@@ -229,7 +229,8 @@
                 document.getElementById('map').style.display = 'block';
 
                 // Uncommenting  this line causes map to render properly
-                map.invalidateSize();
+                //map.invalidateSize();
+                setTimeout(map.invalidateSize.bind(map));
             }
         </script>
     </body>
