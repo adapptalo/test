@@ -10,8 +10,8 @@
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
         <link href="kendo/styles/kendo.indexedlistview.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
-        <!-- bring in the google maps library -->
-        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <!-- bring in the google maps library 
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
  
         <link rel="stylesheet" href="leaflet/leaflet.css" />
         <script src="leaflet/leaflet.js"></script>
@@ -91,33 +91,20 @@
             </div>
         </div>
 
-        
+        <script id="beer-list-template" type="text/x-kendo-template">
+                <a style="height:60px;" data-role="listview-link" href="\#side-inbox?alert_ID=#:B_Id#">
+                    <img src="Images/beers/#=IMAGEN#" class="item-photo">
+                    <h3 class="item-title">#=CERVESERA#</h3>
+                    <p class="item-info">#=CERVESA#</p>
+                    <p class="item-info"><span class="">ABV:</span>#=ABV#%
+                    <span class=""> IBU:</span>#=IBU#</p>
+                </a>
+
+        </script>
         <!-- Search Views -->
 
         <div data-role="view" id="search-view" data-layout="base-layout" data-title="Search" data-init="app.searchView.init" data-show="app.searchView.show" style="display: none;">
             <ul id="search-listview" data-role="listview" data-bind="source: results" data-template="album-list-template" data-style="inset" data-endless-scroll="true" data-auto-bind="false"></ul>
-        </div>
-
-        <div data-role="layout" data-id="search-layout" data-show="app.baseLayout.show">
-            <header data-role="header">
-                <div data-role="navbar">
-                    <span data-role="view-title"></span>
-                </div>
-                <div class="search-container">
-                    <input type="text" class="search-text" placeholder="Album title or artist" />
-                    <a data-role="button" data-icon="search" data-click="app.searchView.submitSearch"></a>
-                </div>
-            </header>
-            <div data-role="footer">
-                <div data-role="tabstrip">
-                    <a href="#genres-view" data-icon="home">Home</a>
-                    <a href="#search-view" data-icon="search">Search</a>
-                    <a href="#map-view" data-icon="globe">Map</a>
-                    <a href="#cart-view" data-icon="cart">Cart<span class="cart-badge km-badge" style="display: none;"></span></a>
-                    <a href="#account-view" data-icon="contacts">Account</a>
-                    <a href="#about-view" data-icon="about">About</a>
-                </div>
-            </div>
         </div>
 
         <!-- Cart Checkout Views -->
@@ -225,7 +212,7 @@
 
         <!-- Account Views -->
 
-        <div data-role="view" id="account-view" data-layout="account-layout" data-title="Account" style="display: none;" data-model="app.accountView.viewModel" data-before-show="app.accountView.beforeShow" data-show="app.accountView.accountViewShow">
+        <div data-role="view" id="account-view" data-layout="base-layout" data-title="Account" style="display: none;" data-model="app.accountView.viewModel" data-before-show="app.accountView.beforeShow" data-show="app.accountView.accountViewShow">
             <ul id="order-history-list" class="order-history-list"></ul>
         </div>
 
@@ -436,107 +423,7 @@
             <div>#=Title#</div>
             <div>#=Quantity# at #=kendo.toString(UnitPrice, "c")# each</div>
         </script>
-        <script>
-            function showMap69() {
-
-            navigator.geolocation.getCurrentPosition(
-            onSuccessShowMap,
-            onErrorShowMap
-            );
-
-            }
-            
-            function onSuccessShowMap(position) {
-
-            var latlng = new google.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude);
-
-            var mapOptions = {
-
-            sensor: true,
-            center: latlng,
-            panControl: false,
-            zoomControl: true,
-            zoom: 16,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            streetViewControl: false,
-            mapTypeControl: true,
-
-            };
-
-            var map = new google.maps.Map(
-            document.getElementById('map_canvas'),
-            mapOptions
-            );
-
-            var marker = new google.maps.Marker({
-            position: latlng,
-            map: map
-            });
-            console.log(marker);
-            console.log("map rendering");
-            }
-            
-            function onErrorShowMap(error) {
-
-            alert("error");
-            }
-            /*    var map = L.map('map_canvas').setView([41.375553,2.149284], 13);
-
-                //var map = L.map('map');
-
-		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-		}).addTo(map);
-
-
-		
-		var greenIcon = L.icon({
-                    iconUrl: 'http://www.adapptalo.com/test/icon.png',
-                    //shadowUrl: 'leaf-shadow.png',
-
-                    iconSize:     [75, 75], // size of the icon
-                    //shadowSize:   [50, 64], // size of the shadow
-                    iconAnchor:   [35, 75], // point of the icon which will correspond to marker's location
-                    //shadowAnchor: [4, 62],  // the same for the shadow
-                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-                });
-
-                L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(map)
-			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();*/
-
-		/*var popup = L.popup();
-
-		function onMapClick(e) {
-			popup
-				.setLatLng(e.latlng)
-				.setContent("You clicked the map at " + e.latlng.toString())
-				.openOn(map);
-		}
-
-		map.on('click', onMapClick);*/
- 
-  /*
-                function onLocationFound(e) {
-			var radius = e.accuracy / 2;
-
-			L.marker(e.latlng).addTo(map)
-				.bindPopup("Usted está alrededor de " + radius + " metros de este punto").openPopup();
-
-			L.circle(e.latlng, radius).addTo(map);
-		}
-
-		function onLocationError(e) {
-			alert(e.message);
-		}
-                map.on('locationfound', onLocationFound);
-		map.on('locationerror', onLocationError);
-
-		//map.locate({setView: true, maxZoom: 16});
-                map.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});*/
-	</script>
+   
         <!-- Scripts -->
 
         
