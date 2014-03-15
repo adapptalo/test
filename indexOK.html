@@ -5,11 +5,52 @@
         <meta charset="utf-8" />
         <script src="cordova.js"></script>
         <script src="Plugins/Child%20Browser/childbrowser.js"></script>
-        <script src="http://adapptalo.com/BBF/beers.js"></script>
-       	
+        
+        
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
         <link href="kendo/styles/kendo.indexedlistview.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
+        <!-- bring in the google maps library 
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+ 
+        <link rel="stylesheet" href="leaflet/leaflet.css" />
+        <script src="leaflet/leaflet.js"></script>
+        <script src="http://adapptalo.com/BBF/beers.js"></script>
+       	
+    <!--
+    <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
+    <script src="openlayers/OpenLayers.js?mobile"></script>
+    <script src="openlayers/mobile-layers.js"></script>
+    <link href="openlayers/style.mobile.css" rel="stylesheet" />
+    -->
+    <!--<script src="openlayers/OpenLayers.mobile.js"></script>-->
+    
+    <style>
+        body {
+                padding: 0;
+                margin: 0;
+        }
+        html, body, #map {
+                height: 100%;
+        }
+        #map_canvas {
+            position:absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .km-ios .km-insetcontent,.km-ios #about-view .km-content, .km-ios, .km-ios .km-content{
+            /*background: url('http://thecodeplayer.com/uploads/media/wood_pattern.png') repeat !important;*/
+             background : transparent url(http://thecodeplayer.com/uploads/media/wood_pattern.png) 0 0 repeat fixed !important;
+            background-size : cover;
+
+        }
+    </style>
     </head>
     <body id="body">
 
@@ -49,6 +90,7 @@
                 <div data-role="tabstrip">
                     <a href="#genres-view" data-icon="home">Home</a>
                     <a href="#search-view" data-icon="search">Search</a>
+                    <a href="#map-view" data-icon="globe">Map</a>
                     <a href="#cart-view" data-icon="cart">Cart<span class="cart-badge km-badge" style="display: none;"></span></a>
                     <a href="#account-view" data-icon="contacts">Account</a>
                     <a href="#about-view" data-icon="about">About</a>
@@ -56,73 +98,98 @@
             </div>
         </div>
 
-        <div data-role="layout" data-id="home-layout" data-init="app.homeLayout.init" data-show="app.homeLayout.show" data-platform="android">
-            <div data-role="header">
-                <div data-role="navbar">
-                    <div class="app-icon" data-align="left"></div>
-                    <span data-role="view-title"></span>
-                    <div data-align="right" class="action-buttons">
-                        <a data-role="button" href="#search-view" data-icon="search"></a>
-                        <a data-role="button" href="#cart-view" data-icon="cart"></a>
-                        <a data-role="button" href="#popover-action-overflow" data-rel="popover" data-icon="action-overflow"></a>
-                    </div>
-                </div>
-                <div data-role="tabstrip">
-                    <a href="#genres-view">Genres</a>
-                    <a href="#artists-view">Artists</a>
-                </div>
-            </div>
+        <div data-role="view" id="beers-view" data-layout="base-layout" data-title="Albums" data-model="app.artistsView.viewModel" class="km-insetcontent" style="display: none;">
+            <ul data-role="indexedlistview" data-bind="source: beers2" data-template="beer-list-template2" data-fixed-headers="true"></ul>
+        </div>
+        <script id="beer-list-template2" type="text/x-kendo-template">
+        XXXX
+        </script>
+            
+        <script id="beer-list-template" type="text/x-kendo-template">
+                <a style="height:60px;" data-role="listview-link" href="\#side-inbox?alert_ID=#:B_Id#">
+                    <img src="Images/beers/#=IMAGEN#" class="item-photo">
+                    <h3 class="item-title">#=CERVESERA#</h3>
+                    <p class="item-info">#=CERVESA#</p>
+                    <p class="item-info"><span class="">ABV:</span>#=ABV#%
+                    <span class=""> IBU:</span>#=IBU#</p>
+                </a>
 
-            <div data-role="popover" id="popover-action-overflow" data-popup='{"height": 110, "width": 125}'>
-                <div data-role="view" data-title="People">
-                    <ul data-role="listview" data-click="app.homeLayout.navigate">
-                        <li data-target="#account-view">Account</li>
-                        <li data-target="#about-view">About</li>
-                    </ul>
+        </script>
+        <div data-role="view" data-layout="base-layout" data-init="mobileListViewLocalFiltering" id="beers-view2" data-title="Products">
+            <header data-role="header">
+                <div data-role="navbar">
+                    <span data-role="view-title"></span>
+                    <a data-align="right" data-role="button" class="nav-button" href="#index">Index</a>
                 </div>
-            </div>
+            </header>
+
+            <ul id="local-filterable-listview"></ul>
         </div>
 
+        <script type="text/x-kendo-tmpl" id="mobile-listview-filtering-template">
+            <div class="product">
+                <h3>#:ProductName#</h3>
+                <p>#:kendo.toString(UnitPrice, "c")#</p>
+            </div>
+        </script>
+        
+        <script>
+            function mobileListViewLocalFiltering() {
+                var dataSource = new kendo.data.DataSource({
+                    data: products,
+                    schema: {
+                        model: {
+                            fields: {
+                                ProductName: { type: "string" },
+                                UnitPrice: { type: "number" },
+                                UnitsInStock: { type: "number" },
+                                Discontinued: { type: "boolean" }
+                            }
+                        }
+                    }
+                });
+
+                $("#local-filterable-listview").kendoMobileListView({
+                    dataSource: dataSource,
+                    template: $("#mobile-listview-filtering-template").text(),
+                    filterable: {
+                        field: "ProductName",
+                        operator: "startswith"
+                    },
+                    virtualViewSize: 100, // this configuration is needed to determine the items displayed, since the datasource does not (and should not) have paging set.
+                    endlessScroll: true
+                });
+            }
+        </script>
+
+        <style scoped>
+            .product h3 {
+                font-size: 1.3em;
+                line-height: 1.4em;
+                margin: 0;
+                padding: 0;
+                height: 1.3em;
+                overflow: hidden;
+            }
+            .product p {
+                font-size: 1em;
+                margin: 0;
+                padding: .3em 0 0;
+            }
+            .pullImage {
+                width: 64px;
+                height: 64px;
+                border-radius: 3px;
+                float: left;
+                margin-right: 10px;
+            }
+        </style>
 
         <!-- Search Views -->
 
-        <div data-role="view" id="search-view" data-layout="search-layout" data-title="Search" data-init="app.searchView.init" data-show="app.searchView.show" style="display: none;">
+        <div data-role="view" id="search-view" data-layout="base-layout" data-title="Search" data-init="app.searchView.init" data-show="app.searchView.show" style="display: none;">
             <ul id="search-listview" data-role="listview" data-bind="source: results" data-template="album-list-template" data-style="inset" data-endless-scroll="true" data-auto-bind="false"></ul>
         </div>
-
-        <div data-role="layout" data-id="search-layout" data-show="app.baseLayout.show">
-            <header data-role="header">
-                <div data-role="navbar">
-                    <span data-role="view-title"></span>
-                </div>
-                <div class="search-container">
-                    <input type="text" class="search-text" placeholder="Album title or artist" />
-                    <a data-role="button" data-icon="search" data-click="app.searchView.submitSearch"></a>
-                </div>
-            </header>
-            <div data-role="footer">
-                <div data-role="tabstrip">
-                    <a href="#genres-view" data-icon="home">Home</a>
-                    <a href="#search-view" data-icon="search">Search</a>
-                    <a href="#cart-view" data-icon="cart">Cart<span class="cart-badge km-badge" style="display: none;"></span></a>
-                    <a href="#account-view" data-icon="contacts">Account</a>
-                    <a href="#about-view" data-icon="about">About</a>
-                </div>
-            </div>
-        </div>
-
-        <div data-role="layout" data-id="search-layout" data-platform="android" data-show="app.baseLayout.show">
-            <header data-role="header">
-                <div data-role="navbar">
-                    <a class="nav-button" data-align="left" data-role="backbutton"></a>
-                    <input type="text" class="search-text" placeholder="Album title or artist" />
-                    <div data-align="right" class="action-buttons">
-                        <a data-role="button" data-icon="search" data-click="app.searchView.submitSearch"></a>
-                    </div>
-                </div>
-            </header>
-        </div>
-
 
         <!-- Cart Checkout Views -->
 
@@ -200,6 +267,7 @@
                 <div data-role="tabstrip">
                     <a href="#genres-view" data-icon="home">Home</a>
                     <a href="#search-view" data-icon="search">Search</a>
+                    <a href="#map-view" data-icon="globe">Map</a>
                     <a href="#cart-view" data-icon="cart">Cart<span class="cart-badge km-badge" style="display: none;"></span></a>
                     <a href="#account-view" data-icon="contacts">Account</a>
                     <a href="#about-view" data-icon="about">About</a>
@@ -218,6 +286,7 @@
                 <div data-role="tabstrip">
                     <a href="#genres-view" data-icon="home">Home</a>
                     <a href="#search-view" data-icon="search">Search</a>
+                    <a href="#map-view" data-icon="globe">Map</a>
                     <a href="#cart-view" data-icon="cart">Cart<span class="cart-badge km-badge" style="display: none;"></span></a>
                     <a href="#account-view" data-icon="contacts">Account</a>
                     <a href="#about-view" data-icon="about">About</a>
@@ -225,22 +294,9 @@
             </div>
         </div>
 
-        <div data-role="layout" data-id="checkout-complete-layout" data-show="app.baseLayout.show" data-platform="android">
-            <header data-role="header">
-                <div data-role="navbar">
-                    <div class="app-icon" data-align="left"></div>
-                    <span data-role="view-title"></span>
-                    <div data-align="right" class="action-buttons">
-                        <a data-role="button" href="#home-view" data-icon="home"></a>
-                    </div>
-                </div>
-            </header>
-        </div>
-
-
         <!-- Account Views -->
 
-        <div data-role="view" id="account-view" data-layout="account-layout" data-title="Account" style="display: none;" data-model="app.accountView.viewModel" data-before-show="app.accountView.beforeShow" data-show="app.accountView.accountViewShow">
+        <div data-role="view" id="account-view" data-layout="base-layout" data-title="Account" style="display: none;" data-model="app.accountView.viewModel" data-before-show="app.accountView.beforeShow" data-show="app.accountView.accountViewShow">
             <ul id="order-history-list" class="order-history-list"></ul>
         </div>
 
@@ -276,6 +332,7 @@
                 <div data-role="tabstrip">
                     <a href="#genres-view" data-icon="home">Home</a>
                     <a href="#search-view" data-icon="search">Search</a>
+                    <a href="#map-view" data-icon="globe">Map</a>
                     <a href="#cart-view" data-icon="cart">Cart<span class="cart-badge km-badge" style="display: none;"></span></a>
                     <a href="#account-view" data-icon="contacts">Account</a>
                     <a href="#about-view" data-icon="about">About</a>
@@ -291,27 +348,13 @@
             </div>
         </div>
 
-        <div data-role="layout" data-id="account-layout" data-show="app.accountView.layoutShow" data-platform="android">
-            <header data-role="header">
-                <div data-role="navbar">
-                    <a class="nav-button" data-align="left" data-role="backbutton"></a>
-                    <span data-role="view-title"></span>
-                    <div data-align="right" class="action-buttons">
-                        <a data-role="button" href="#popover-account-overflow" data-rel="popover" data-icon="action-overflow"></a>
-                    </div>
-                </div>
-                <h2><span data-bind="text: userName" class="user-name"></span>'s Order History</h2>
-            </header>
-        </div>
-
 
         <!-- About Views -->
 
-        <div data-role="view" id="about-view" data-layout="about-layout" data-title="About" data-model="app.aboutView.viewModel" style="display: none;">
+        <div data-role="view" id="about-view" data-layout="base-layout" data-title="About" data-model="app.aboutView.viewModel" style="display: none;">
             <img src="Images/awesomesauce-logo.png"/>
             <h1>Kendo UI Mobile Music Store</h1>
             <p>The Mobile Music Store is a demo app built using Kendo UI Mobile.</p>
-            
             <footer>
                 <div class="footer-images"><img src="Images/kendo-ui-logo.png"/></div>
                 <a data-role="button" data-rel="actionsheet" href="#learnmore-actions">Learn More about Kendo UI</a>
@@ -329,6 +372,7 @@
                 <div data-role="tabstrip">
                     <a href="#genres-view" data-icon="home">Home</a>
                     <a href="#search-view" data-icon="search">Search</a>
+                    <a href="#map-view" data-icon="globe">Map</a>
                     <a href="#cart-view" data-icon="cart">Cart<span class="cart-badge km-badge" style="display: none;"></span></a>
                     <a href="#account-view" data-icon="contacts">Account</a>
                     <a href="#about-view" data-icon="about">About</a>
@@ -336,19 +380,56 @@
             </div>
         </div>
 
-        <div data-role="layout" data-id="about-layout" data-platform="android" data-show="app.baseLayout.show">
-            <header data-role="header">
-                <div data-role="navbar">
-                    <a href="#genres-view" class="nav-button" data-align="left" data-role="backbutton"></a>
-                    <span data-role="view-title"></span>
-                    <div data-align="right" class="action-buttons">
-                        <a data-role="button" href="#home-view" data-icon="home"></a>
-                    </div>
-                </div>
-            </header>
+       
+       <div data-role="view" data-title="Test app" data-layout="base-layout" data-stretch="true" data-init="mainShow" id="map-view">
+            <div id="map" style="border-collapse: collapse; width:100%;"></div>
         </div>
+        
+        <script type="text/javascript">
+            //var app = new kendo.mobile.Application(document.body, { hideAddressBar: true, loading: '<h1>@LL.Common.WAITING</h1>' });
 
+            function mainShow(e) {
+                var m = L.map('map');
+                m.setView([41.375553,2.149284], 16);
+                var layers = [];
+                layers["OSM"] = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { });
+                var greenIcon = L.icon({
+                    iconUrl: 'Images/iconBBF.png',
+                    //shadowUrl: 'leaf-shadow.png',
+                    iconSize:     [75, 75], // size of the icon
+                    //shadowSize:   [50, 64], // size of the shadow
+                    iconAnchor:   [35, 75], // point of the icon which will correspond to marker's location
+                    //shadowAnchor: [4, 62],  // the same for the shadow
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                });
+                L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(m)
+			.bindPopup("<b>Barcelona Beer Festival</b><br />8, 9 y 10 de Marzo.").openPopup();
+                for (var layer in layers) m.addLayer(layers[layer], false);
+                //m.addControl(new L.Control.Layers(layers));
+		
+                function onLocationFound(e) {
+			var radius = e.accuracy / 2;
 
+			L.marker(e.latlng).addTo(m)
+				.bindPopup("Usted está alrededor de " + radius + " metros de este punto").openPopup();
+
+			L.circle(e.latlng, radius).addTo(m);
+		}
+
+		function onLocationError(e) {
+			alert(e.message);
+		}
+                m.on('locationfound', onLocationFound);
+		m.on('locationerror', onLocationError);
+
+		//map.locate({setView: true, maxZoom: 16});
+                m.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
+                
+                $("#map").height($(e.view.element).height() - 45);
+                m.invalidateSize();
+                
+            }
+        </script>
         <!-- Error Views -->
 
         <div data-role="modalview" id="error-view" style="display: none; width: 95%; height: 90%;">
@@ -367,23 +448,15 @@
 
         <div data-role="layout" data-id="base-layout" data-show="app.baseLayout.show">
             <div data-role="footer">
-                <div data-role="tabstrip">
-                    <a href="#genres-view" data-icon="home">Home</a>
+                <div data-role="tabstrip" id="custom-tabstrip">
+                    <a href="#beers-view" data-icon="home">Home</a>
                     <a href="#search-view" data-icon="search">Search</a>
+                    <a href="#map-view" data-icon="globe">Map</a>
                     <a href="#cart-view" data-icon="cart">Cart<span class="cart-badge km-badge" style="display: none;"></span></a>
                     <a href="#account-view" data-icon="contacts">Account</a>
                     <a href="#about-view" data-icon="about">About</a>
                 </div>
             </div>
-        </div>
-
-        <div data-role="layout" data-id="base-layout" data-show="app.baseLayout.show" data-platform="android">
-            <header data-role="header">
-                <div data-role="navbar">
-                    <a class="nav-button" data-align="left" data-role="backbutton"></a>
-                    <span data-role="view-title"></span>
-                </div>
-            </header>
         </div>
 
 
@@ -434,10 +507,143 @@
             <div>#=Title#</div>
             <div>#=Quantity# at #=kendo.toString(UnitPrice, "c")# each</div>
         </script>
-
-
+   
         <!-- Scripts -->
 
+        
+        <script type="text/javascript">
+          
+            
+        </script>
         <script data-main="scripts/main.js" src="scripts/require.js"></script>
+        
+        <script type="text/javascript">
+                document.addEventListener("deviceready", onDeviceReady, false);
+                // Cordova esta disponible!
+                //
+                function onDeviceReady() {
+                    //alert("deviceready listo!!")
+                     navigator.geolocation.getCurrentPosition(onSuccess, onError);
+                }
+
+                function onSuccess(position) {
+
+                    //alert("geo: "+position.coords.latitude+","+position.coords.longitude);
+
+                }
+
+                // onError Callback receives a PositionError object
+
+                //
+
+                function onError(error) {
+
+                   alert('code: '    + error.code    + '\n' +
+
+                          'message: ' + error.message + '\n');
+
+                }
+                function mostrarPosicion(){
+                    navigator.geolocation.getCurrentPosition(lecturaExitosa, error , {enableHighAccuracy: true } );
+                }
+                function lecturaExitosa(posicion) {
+                    //alert(' tu posicion es: Latitud ' + posicion.coords.latitude+'\n' + 'Longitud '+ posicion.coords.longitude );
+                    var latlng2 = new google.maps.LatLng(posicion.coords.latitude,posicion.coords.longitude);
+                    map.setCenter(latlng2);
+                    marcador.setPosition(latlng2);
+                }
+                function error(){
+                    alert(' no puedo encontrarte :(');
+                }                   
+        </script>
+        <style scoped>
+    #custom-tabstrip,
+    #tabstrip-appearance-header .km-navbar,
+    #custom-tabstrip .km-state-active .km-icon,
+    #tabstrip-appearance-header .km-navbar .km-button
+    {
+        background-color: #228b22;
+    }
+    
+    #custom-tabstrip,
+    #custom-tabstrip .km-button
+    {
+        background: url(http://demos.telerik.com/kendo-ui/content/shared/images/patterns/pattern3.png);
+    }
+	
+	#tabstrip-appearance-header .km-navbar
+    {
+        background: -webkit-gradient(linear, 50% 0, 50% 100%, color-stop(0, rgba(255, 255, 255, 0.5)), color-stop(0.06, rgba(255, 255, 255, 0.45)), color-stop(0.5, rgba(255, 255, 255, 0.2)), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(1, rgba(100, 100, 100, 0))), url(http://demos.telerik.com/kendo-ui/content/shared/images/patterns/pattern4.png);
+        background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.45) 6%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(100, 100, 100, 0)), url(http://demos.telerik.com/kendo-ui/content/shared/images/patterns/pattern4.png);
+	}
+	
+    #tabstrip-appearance-header .km-navbar .km-button
+    {
+        background-color: rgba(131,81,42,.4);
+    }
+
+	#tabstrip-appearance-header .km-navbar .km-view-title,
+	#tabstrip-appearance-header .km-navbar .km-text
+	{
+        color: #83512a;
+        text-shadow: 0 1px 0 #fff;
+	}
+   
+    #custom-tabstrip .km-text,
+    #custom-tabstrip .km-icon
+    {
+    	color: #d9be8c;
+    }
+    
+    #custom-tabstrip .km-state-active .km-text,
+    #custom-tabstrip .km-state-active .km-icon
+    {
+    	color: #62cb62;
+        background-color: transparent;
+    }
+
+    .km-ios #tabstrip-gallery .km-listview .km-list, 
+    .km-ios #tabstrip-cities .km-listview .km-list, 
+    .km-ios #tabstrip-favourites .km-listview .km-list
+    {
+    	border: none;
+    }
+    
+    .km-ios #custom-tabstrip .km-button:active,
+    .km-ios #custom-tabstrip .km-state-active {
+    	box-shadow: inset 0 0 20px #230e04;
+    }
+    
+    #tabstrip-gallery .km-insetcontent,
+    #tabstrip-cities .km-insetcontent,
+    #tabstrip-favourites .km-insetcontent
+    {
+        color: #000;
+        background: url(http://demos.telerik.com/kendo-ui/content/shared/images/patterns/pattern4.png);
+    }
+
+    #custom-tabstrip .km-state-active
+    {
+        background-color: transparent;
+    }
+
+    #tabstrip-gallery h2 {
+        display: inline-block;
+        font-size: 1.1em;
+        margin: 1em 0 1.5em 1em;
+    }
+
+    #tabstrip-gallery img {
+	    float: left;
+        width: 4em;
+        height: 4em;
+        margin: 0;
+        -webkit-box-shadow: 0 1px 3px #333;
+        box-shadow: 0 1px 3px #333;
+        -webkit-border-radius: 8px;
+        border-radius: 8px;
+    }
+</style>
+
     </body>
 </html>
