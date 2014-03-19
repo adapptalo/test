@@ -3,40 +3,28 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
         <script src="http://adapptalo.com/BBF/beers.js"></script>
-<link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+        <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
         <link href="kendo/styles/kendo.indexedlistview.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
         	
         <link rel="stylesheet" href="leaflet/leaflet.css" />
         <script src="leaflet/leaflet.js"></script>
-        <style>
-            /*.leaflet-tile-container img {
--webkit-backface-visibility: hidden;
-}
-.leaflet-control-container
-            {
-            -webkit-transform: translate3d(0,0,0);
-            -webkit-transform: translateZ(0px);
-            }
-            #map {
-                display: none;
-                position: absolute;
-                top: 20px;
-                left: 20px;
-                right: 20px;
-                bottom: 20px;
-                border: solid 3px #654;
-            }*/
-        </style>
+
     </head>
 <body>
         
 <div data-role="view" id="beers-view" data-title="BeersList" data-layout="tabstrip-appearance" data-model="viewModel" >
-        <ul data-role="indexedlistview" data-bind="source: beersL" data-template="beers-list-template" data-fixed-headers="true"></ul>
+        <ul id="custom-listview" data-role="indexedlistview" data-style="inset" data-bind="source: beersL" data-template="beers-list-template" data-fixed-headers="true"></ul>
 </div>
 
 <script id="beers-list-template" type="text/x-kendo-template">
-        #=CERVESERA#
+        <a style="height:60px;" data-role="listview-link" href="\#side-inbox?alert_ID=#:B_Id#">
+            <img src="Images/beers/#=IMAGEN#" class="item-photo">
+            <h3 class="item-title">#=CERVESERA#</h3>
+            <p class="item-info">#=CERVESA#<br>
+            <span class="">ABV:</span>#=ABV#%
+            <span class=""> IBU:</span>#=IBU#</p>
+        </a>    
 </script>  
 
 <div data-role="view" id="tabstrip-gallery" data-title="Gallery" data-layout="tabstrip-appearance">
@@ -211,6 +199,29 @@
             box-shadow: 0 1px 3px #333;
             -webkit-border-radius: 8px;
             border-radius: 8px;
+        }
+        .item-photo {
+            border-radius: 8px;
+            box-shadow: 0 1px 3px #333333;
+            float: left;
+            height: 3em;
+            margin: 0.3em 0;
+            width: 3em;
+        }
+        .item-title {
+            float: left;
+            font-size: 1em;
+            line-height: 1.4em;
+            margin: 0.3em 1em 0 0.6em;
+            width: 50%;
+             color: #4C2A1B;
+        }
+        .item-info {
+            float: left;
+            font-size: 0.7em;
+            line-height: 1em;
+            margin: 0 0 0 0.95em;
+            width: 45%;
         }
     </style>
 
