@@ -14,7 +14,7 @@
 <body>
         
 <div data-role="view" id="beers-view" data-title="BeersList" data-layout="tabstrip-appearance" data-model="viewModel" >
-        <ul id="custom-listview" data-role="indexedlistview" data-style="inset" data-bind="source: beersL" data-template="beers-list-template" data-fixed-headers="true"></ul>
+        <ul id="custom-listview" data-role="indexedlistview" data-bind="source: beersL" data-template="beers-list-template" data-fixed-headers="true"></ul>
 </div>
 
 <script id="beers-list-template" type="text/x-kendo-template">
@@ -205,12 +205,12 @@
             box-shadow: 0 1px 3px #333333;
             float: left;
             height: 3em;
-            margin: 0.3em 0;
+            margin: 0.4em 0;
             width: 3em;
         }
         .item-title {
             float: left;
-            font-size: 1em;
+            font-size: 12px;
             line-height: 1.4em;
             margin: 0.3em 1em 0 0.6em;
             width: 50%;
@@ -218,10 +218,11 @@
         }
         .item-info {
             float: left;
-            font-size: 0.7em;
+            font-size: 11px;
             line-height: 1em;
             margin: 0 0 0 0.95em;
             width: 45%;
+            color: #974D2E;
         }
     </style>
 
