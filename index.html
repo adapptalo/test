@@ -26,6 +26,38 @@
             <span class=""> IBU:</span>#=IBU#</p>
         </a>    
 </script>  
+<div data-role="view" id="side-inbox" data-show="showDetailsView">
+    <header data-role="header">
+      <div data-role="navbar">
+        <a data-role="backbutton" data-align="left">Back</a>
+        <span data-role="view-title">Beer Details</span>
+      </div>
+    </header>
+    <ul id="beer_detail-list" data-role="listview" data-auto-bind="false" data-source="ds" data-template="productsTemplate"></ul>
+
+</div>
+
+<!--DETAIL VIEW LAYOUT-->     
+<script id="productsTemplate" type="text/x-kendo-template">
+    <div class="aside">
+        <h2 class="price">#=CERVESERA#</h2>
+        <img src="Images/beers/#=IMAGEN#" class="item-photo">
+        <p class="price2">#=CERVESA#
+                <br><span class="bold">Estilo:</span>#=ESTIL#
+                <br><span class="bold">ABV:</span>#=ABV#%
+                <span class="bold"> IBU:</span>#=IBU#
+                <br><span style="margin:0px;" class="km-icon km-globe"></span>#=PROCEDENCIA#
+
+        </p>
+        <p class="item-info2">#=DESCRIPCIO#</p>
+
+        <a style="width:40%; float:left" data-role="button" data-bind="click: addToCart"  data-item-id="#:B_Id#">BEERWISH</a>
+        <button style="width:40%; float:right; font-weight:bold; height:30px" class="km-button" onclick="socialsharingDemo()">SocialSharing</button>
+    </div>
+        <input name="CName" type="text" data-bind="value: #=CERVESERA#" id="fName" />
+        <input name="BName" type="text" data-bind="value: #=CERVESA#" id="lName" />
+
+</script>
 
 <div data-role="view" id="tabstrip-gallery" data-title="Gallery" data-layout="tabstrip-appearance">
     <ul data-role="listview" data-style="inset">
@@ -230,57 +262,7 @@
     <div id="map" style="border-collapse: collapse; width:100%;"></div>
 </div>
 
-    <script type="text/javascript">
-        //var app = new kendo.mobile.Application(document.body, { hideAddressBar: true, loading: '<h1>@LL.Common.WAITING</h1>' });
-
-        function mainShow(e) {
-            var map = L.map('map');
-
-            var greenIcon = L.icon({
-                iconUrl: 'Images/iconBBF.png',
-                //shadowUrl: 'leaf-shadow.png',
-                iconSize:     [75, 75], // size of the icon
-                //shadowSize:   [50, 64], // size of the shadow
-                iconAnchor:   [35, 75], // point of the icon which will correspond to marker's location
-                //shadowAnchor: [4, 62],  // the same for the shadow
-                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-            });
-            L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(map)
-			.bindPopup("<b>Barcelona Beer Festival</b><br />8, 9 y 10 de Marzo.").openPopup();
-
-            L.tileLayer(
-              'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              {maxZoom: 18}
-            ).addTo(map);
-
-            map.setView([41.375553,2.149284], 15);
-
-            document.getElementById('map').style.display = 'block';
-
-            function onLocationFound(e) {
-			var radius = e.accuracy / 2;
-
-			L.marker(e.latlng).addTo(map)
-				.bindPopup("Usted está alrededor de " + radius + " metros de este punto").openPopup();
-
-			L.circle(e.latlng, radius).addTo(map);
-		}
-
-		function onLocationError(e) {
-			alert(e.message);
-		}
-                map.on('locationfound', onLocationFound);
-		map.on('locationerror', onLocationError);
-
-		//map.locate({setView: true, maxZoom: 16});
-                map.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
-                
-                
-            // Uncommenting  this line causes map to render properly
-            map.invalidateSize();
-            //setTimeout(map.invalidateSize.bind(map));
-        }
-    </script>
+    
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="http://cdn.kendostatic.com/2013.1.319/js/kendo.mobile.min.js"></script>
     <script src="kendo.indexedlistview.js"></script>
@@ -335,5 +317,93 @@
                     var app = new kendo.mobile.Application(document.body);
 
             </script>
+            <script type="text/javascript">
+
+            var beersDataSource2 = new kendo.data.DataSource({
+                    data: beers,
+                    group: [{field: "FirstLetter"}],
+                    schema: {
+                            parse: function (data) {
+                                    $.each(data, function (index, artist) {
+                                            artist.FirstLetter = artist.CERVESERA.substring(0,1).toUpperCase();
+                                            if(artist.FirstLetter.match(/\d/)) {
+                                                    artist.FirstLetter = "#"
+                                            }
+                                    });
+                                    return data;
+                            }
+                    }
+            });
+            var ds = beersDataSource2;
+
+            function showDetailsView(e) {
+                alert(parseInt(e.view.params.alert_ID));
+                ds.filter({
+                    field: "B_Id",
+                    operator: "eq",
+                    value: parseInt(e.view.params.alert_ID)
+                });
+
+                ds.read();
+            }
+            localStorage.setItem('movieArray', JSON.stringify(beers));
+            var retrievedMovieArray = JSON.parse(localStorage.getItem('movieArray'));
+            
+            //alert('typeof retrievedMovieArray: ' + typeof retrievedMovieArray);
+            /*console.log('retrievedMovieArray:');
+            for (var p in retrievedMovieArray) {
+                console.log(p +'->'+ retrievedMovieArray[p].CERVESA +'|'+retrievedMovieArray[p].CERVESERA);
+            }*/
+            
+            //var app = new kendo.mobile.Application(document.body, { hideAddressBar: true, loading: '<h1>@LL.Common.WAITING</h1>' });
+
+            function mainShow(e) {
+                var map = L.map('map');
+
+                var greenIcon = L.icon({
+                    iconUrl: 'Images/iconBBF.png',
+                    //shadowUrl: 'leaf-shadow.png',
+                    iconSize:     [75, 75], // size of the icon
+                    //shadowSize:   [50, 64], // size of the shadow
+                    iconAnchor:   [35, 75], // point of the icon which will correspond to marker's location
+                    //shadowAnchor: [4, 62],  // the same for the shadow
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                });
+                L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(map)
+                            .bindPopup("<b>Barcelona Beer Festival</b><br />8, 9 y 10 de Marzo.").openPopup();
+
+                L.tileLayer(
+                  'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  {maxZoom: 18}
+                ).addTo(map);
+
+                map.setView([41.375553,2.149284], 15);
+
+                document.getElementById('map').style.display = 'block';
+
+                function onLocationFound(e) {
+                            var radius = e.accuracy / 2;
+
+                            L.marker(e.latlng).addTo(map)
+                                    .bindPopup("Usted está alrededor de " + radius + " metros de este punto").openPopup();
+
+                            L.circle(e.latlng, radius).addTo(map);
+                    }
+
+                    function onLocationError(e) {
+                            alert(e.message);
+                    }
+                    map.on('locationfound', onLocationFound);
+                    map.on('locationerror', onLocationError);
+
+                    //map.locate({setView: true, maxZoom: 16});
+                    map.locate({setView: true, maxZoom: 16, watch: true, enableHighAccuracy: true, maximumAge: 15000, timeout: 3000000,});
+
+
+                // Uncommenting  this line causes map to render properly
+                map.invalidateSize();
+                //setTimeout(map.invalidateSize.bind(map));
+            }
+        </script>
 </body>
 </html>
