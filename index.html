@@ -12,7 +12,7 @@
     </head>
 <body>
         
-<div data-role="view" id="beers-view" data-title="BeersList" data-layout="tabstrip-appearance" data-model="viewModel"  data-before-show="showHomeView">
+<div data-role="view" id="beers-view" data-title="BeersList" data-layout="tabstrip-appearance" data-model="viewModel"  data-show="showHomeView">
         <ul id="custom-listview" data-role="indexedlistview" data-bind="source: beersL" data-template="beers-list-template" data-fixed-headers="true"></ul>
 </div>
 
@@ -38,11 +38,11 @@
 
 <!--DETAIL VIEW LAYOUT-->     
 <script id="productsTemplate" type="text/x-kendo-template">
-    <div class="aside">
+    <div id="page-wrap" class="aside2">
         <h2 class="price">#=CERVESERA#</h2>
-        <img src="Images/beers/#=IMAGEN#" class="item-photo">
+        
         <p class="price2">#=CERVESA#
-                <br><span class="bold">Estilo:</span>#=ESTIL#
+                <img src="Images/beers/#=IMAGEN#" class="item-photo"><br><span class="bold">Estilo:</span>#=ESTIL#
                 <br><span class="bold">ABV:</span>#=ABV#%
                 <span class="bold"> IBU:</span>#=IBU#
                 <br><span style="margin:0px;" class="km-icon km-globe"></span>#=PROCEDENCIA#
@@ -152,9 +152,46 @@
     .km-ios .km-list > li{background-color: transparent !important;background-image: none !important}
     #side-inbox .item-photo{height: 100px; width: 100px}
     .aside{text-align: center;background: url(Images/etiqueta2.png) no-repeat;background-size: 100%; /*background-size: cover;background-size: contain;*/
-  padding: 30px;
-    text-align: center;
-}
+        padding: 30px;
+          text-align: center;
+      }
+     /*.km-group-container*/#side-inbox .km-content { 
+            background: url(Images/beer_bg.jpg) no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+    }
+
+    #page-wrap { /*width: 400px;*/ margin: 50px auto; padding: 20px; background: white; -moz-box-shadow: 0 0 20px black; -webkit-box-shadow: 0 0 20px black; box-shadow: 0 0 20px black; }
+    #side-inbox .item-photo {
+        background-color: #FFFFFF;
+        height: 75px;
+        margin-left: 10px;
+        margin-right: 10px;
+       /* padding: 10px;*/
+        width: 75px;
+        float:left;
+    }
+    
+    #side-inbox p.price2 {
+        font-size: 13px;
+        font-style: italic;
+        margin-top: 5px;
+        min-height: 95px;
+        padding: 0;
+    }
+    #side-inbox .km-content .price {
+        display: block;
+        font-size: 15px;
+        margin-bottom: 0;
+    }
+    .item-info2 {
+        color: #974D2E;
+        font-size: 11px;
+        line-height: 2em;
+    }
+    #side-inbox .km-group-title{display: none;}
     //.km-list > li, .km-root .km-listview-link, .km-root .km-listview-label{padding: 0.5em 0.4em !important;}
     /*#beers-view .km-listview .km-list {
         border-top-color: #dcbe87;
@@ -548,5 +585,32 @@
                     var app = new kendo.mobile.Application(document.body);
 
             </script>
+         
+<!-- plugins -->
+<script src="js/plugins/Flashlight.js"></script>
+
+<!-- plugins demo -->
+<script src="js/socialsharing-plugin-demo.js"></script>
+<script src="js/calendar-plugin-demo.js"></script>
+<script src="js/flashlight-plugin-demo.js"></script>
+<script src="js/sslcertificatechecker-plugin-demo.js"></script>
+<script src="js/webview-background-color-plugin-demo.js"></script>
+<script src="js/videocaptureplus-plugin-demo.js"></script>
+
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript">
+  app.initialize();
+
+  // this is for the LaunchMyApp plugin
+  function handleOpenURL(url) {
+    setTimeout(function() {
+      alert("LaunchMyApp plugin received url: " + url);
+    }, 0);
+  }
+
+  window.onerror = function(a,b,c) {
+    alert(a + "; " + b + "; " + c);
+  }
+</script>
 </body>
 </html>
