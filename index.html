@@ -12,7 +12,7 @@
     </head>
 <body>
         
-<div data-role="view" id="beers-view" data-title="BeersList" data-layout="tabstrip-appearance" data-model="viewModel" >
+<div data-role="view" id="beers-view" data-title="BeersList" data-layout="tabstrip-appearance" data-model="viewModel"  data-before-show="showHomeView">
         <ul id="custom-listview" data-role="indexedlistview" data-bind="source: beersL" data-template="beers-list-template" data-fixed-headers="true"></ul>
 </div>
 
@@ -538,6 +538,11 @@
                     // this just fixes a glitch in this demo page.
                     // not needed in real Kendo Mobile use.
                     //setTimeout(function () {$(".km-indexedlistview").data("kendoMobileIndexedListView").refresh();}, 1);
+                    function showHomeView(e) {
+                        //alert("showHomeView");
+                        setTimeout(function () {$(".km-indexedlistview").data("kendoMobileIndexedListView").refresh();}, 1);
+                    }
+
             </script>
             <script>
                     var app = new kendo.mobile.Application(document.body);
