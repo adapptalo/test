@@ -51,7 +51,7 @@
         <p class="item-info2">#=DESCRIPCIO#</p>
 
         <a style="width:40%; float:left" data-role="button" data-bind="click: addToCart"  data-item-id="#:B_Id#">BEERWISH</a>
-        <button style="width:40%; float:right; font-weight:bold; height:30px" class="km-button" onclick="socialsharingDemo()">SocialSharing</button>
+        <button style="width:40%; float:right; font-weight:bold; height:30px" class="km-button" onclick="socialsharingDemo()"><span class="km-text">SOCIALSHARING</span></button>
     </div>
         <input name="CName" type="text" data-bind="value: #=CERVESERA#" id="fName" />
         <input name="BName" type="text" data-bind="value: #=CERVESA#" id="lName" />
@@ -150,6 +150,12 @@
         background: url(http://demos.telerik.com/kendo-ui/content/shared/images/patterns/pattern3.png);
     }
     .km-ios .km-list > li{background-color: transparent !important;background-image: none !important}
+    #side-inbox .item-photo{height: 100px; width: 100px}
+    .aside{text-align: center;background: url(Images/etiqueta2.png) no-repeat;background-size: 100%; /*background-size: cover;background-size: contain;*/
+  padding: 30px;
+    text-align: center;
+    width: 656px;
+}
     //.km-list > li, .km-root .km-listview-link, .km-root .km-listview-label{padding: 0.5em 0.4em !important;}
     /*#beers-view .km-listview .km-list {
         border-top-color: #dcbe87;
@@ -288,6 +294,16 @@
     color: #ffffff;
 }
 
+
+#side-inbox .km-navbar,
+.km-wp-light #side-inbox .km-navbar,
+.km-wp-dark #side-inbox .km-navbar,
+#side-inbox .km-content .km-button {
+    background: url(Images/pattern9.png);
+    color: #ffffff;
+}
+
+
 #beers-view .item-photo {
     width: 40px;
     height: 40px;
@@ -410,7 +426,7 @@
             var ds = beersDataSource2;
 
             function showDetailsView(e) {
-                alert(parseInt(e.view.params.alert_ID));
+                //alert(parseInt(e.view.params.alert_ID));
                 ds.filter({
                     field: "B_Id",
                     operator: "eq",
@@ -522,7 +538,7 @@
 
                     // this just fixes a glitch in this demo page.
                     // not needed in real Kendo Mobile use.
-                    setTimeout(function () {$(".km-indexedlistview").data("kendoMobileIndexedListView").refresh();}, 1);
+                    //setTimeout(function () {$(".km-indexedlistview").data("kendoMobileIndexedListView").refresh();}, 1);
             </script>
             <script>
                     var app = new kendo.mobile.Application(document.body);
