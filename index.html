@@ -13,6 +13,42 @@
 <body>
         
 <div data-role="view" id="beers-view" data-title="BeersList" data-layout="tabstrip-appearance" data-model="viewModel"  data-show="showHomeView">
+         <div class="app">
+  <h1>Plugins Demo</h1>
+  <div id="deviceready" class="blink1">
+    <p class="event listening">Connecting to Device</p>
+    <p class="event received">Device is Ready</p>
+    <div id="pluginsDemoDiv">
+      <p>
+        <button onclick="socialsharingDemo()">SocialSharing</button>
+      </p>
+      <p>
+        <button onclick="changeWebViewColor()">Make webview background green (iOS)</button>
+        <input name="test" type="text" width="10" placeholder="test"/>
+      </p>
+      <p>
+        <button onclick="calendarDemoAdd()">Calendar-add</button>
+        <button onclick="calendarDemoRemove()">Calendar-del (iOS)</button>
+      </p>
+      <p>
+        <button onclick="window.plugins.toast.showShortBottom('Hello there!', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Show a toast at the bottom</button>
+      </p>
+      <p>
+        <button onclick="flashlightDemo()">Toggle Flashlight</button>
+      </p>
+      <p>
+        <button onclick="sslcertificatecheckerDemo(true)">SSL check-ok</button>
+        <button onclick="sslcertificatecheckerDemo(false)">SSL check-fail</button>
+      </p>
+      <p>
+        <button onclick="videoCapturePlusDemo(true,true,5)">VideCapturePlus HQ front 5s</button>
+      </p>
+      <div id="video_meta_container"></div>
+      <div id="video_meta_container2"></div>
+      <div id="video_container"></div>
+    </div>
+  </div>
+</div>
         <ul id="custom-listview" data-role="indexedlistview" data-bind="source: beersL" data-template="beers-list-template" data-fixed-headers="true"></ul>
 </div>
 
@@ -40,8 +76,11 @@
 <script id="productsTemplate" type="text/x-kendo-template">
     <div id="page-wrap" class="aside2">
         <h2 class="price">#=CERVESERA#</h2>
-        
-        <p class="price2">#=CERVESA#
+        <p class="event listening">Connecting to Device</p>
+    <p class="event received">Device is Ready</p>
+    <div id="pluginsDemoDiv">
+     </div>
+        <p class="price2">
                 <img src="Images/beers/#=IMAGEN#" class="item-photo"><br><span class="bold">Estilo:</span>#=ESTIL#
                 <br><span class="bold">ABV:</span>#=ABV#%
                 <span class="bold"> IBU:</span>#=IBU#
@@ -585,6 +624,7 @@
                     var app = new kendo.mobile.Application(document.body);
 
             </script>
+<script type="text/javascript" src="phonegap.js"></script>
          
 <!-- plugins -->
 <script src="js/plugins/Flashlight.js"></script>
