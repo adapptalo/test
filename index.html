@@ -21,8 +21,8 @@
             <img src="Images/beers/#=IMAGEN#" class="item-photo">
             <h3 class="item-title">#=CERVESERA#</h3>
             <p class="item-info">#=CERVESA#<br>
-            <span class="">ABV:</span>#=ABV#%
-            <span class=""> IBU:</span>#=IBU#</p>
+            <small>ABV:</small>#=ABV#%
+            <small> IBU:</small>#=IBU#</p>
         </a>    
 </script>  
 <div data-role="view" id="side-inbox" data-show="showDetailsView">
@@ -150,7 +150,7 @@
         background: url(http://demos.telerik.com/kendo-ui/content/shared/images/patterns/pattern3.png);
     }
     .km-ios .km-list > li{background-color: transparent !important;background-image: none !important}
-    .km-list > li, .km-root .km-listview-link, .km-root .km-listview-label{padding: 0.3em 0.7em !important;}
+    //.km-list > li, .km-root .km-listview-link, .km-root .km-listview-label{padding: 0.5em 0.4em !important;}
     /*#beers-view .km-listview .km-list {
         border-top-color: #dcbe87;
         background-image: url(http://demos.telerik.com/kendo-ui/content/shared/images/patterns/pattern8.png);
@@ -301,17 +301,17 @@
 
 #custom-listview .item-title {
     float: left;
-    font-size: 1em;
+    font-size: 15px;
     line-height: 1.4em;
     margin: .3em 1em 0 .6em;
-    width: 50%;
+    width: 70%;
 }
 #custom-listview .item-info {
     float: left;
     font-size: .7em;
     line-height: 1em;
     margin: 0 0 0 .95em;
-    width: 45%;
+    width: 75%;
 }
 
 #custom-listview .item-title,
@@ -350,10 +350,10 @@
     text-shadow: none;
 }
 
-#beers-view .km-group-title h2 {
+#beers-view .km-group-title {
     color: #974d2e;
     font-weight: normal;
-    font-size: 1.4em;
+    font-size: 1em;
     background-image: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.45) 6%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(100, 100, 100, 0)), url(Images/pattern4.png);
     background-image: -webkit-gradient(linear, 50% 0, 50% 100%, color-stop(0, rgba(255, 255, 255, 0.5)), color-stop(0.06, rgba(255, 255, 255, 0.45)), color-stop(0.5, rgba(255, 255, 255, 0.2)), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(1, rgba(100, 100, 100, 0))), url(Images/pattern4.png);
 }
