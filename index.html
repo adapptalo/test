@@ -193,6 +193,7 @@
     }
     #side-inbox .km-group-title{display: none;}
     .km-group-title, .km-list > li, .km-root .km-listview-link, .km-root .km-listview-label{padding: 0 !important}
+    .km-scroll-header{background-color: red; font-family: fantasy;color: whitesmoke !important}
     //.km-list > li, .km-root .km-listview-link, .km-root .km-listview-label{padding: 0.5em 0.4em !important;}
     /*#beers-view .km-listview .km-list {
         border-top-color: #dcbe87;
@@ -226,130 +227,7 @@
     }
 
 </style>
-<style scoped>
-#beers-view .km-content {
-    background-color: #f0f0f0;
-}
-
-#beers-view .km-navbar .km-button {
-    background-color: #974d2e;
-}
-
-#beers-view .km-navbar,
-.km-wp-light #beers-view .km-navbar,
-.km-wp-dark #beers-view .km-navbar,
-#beers-view .km-content .km-button {
-    background: url(Images/pattern9.png);
-    color: #ffffff;
-}
-
-
-/*#side-inbox .km-navbar,
-.km-wp-light #side-inbox .km-navbar,
-.km-wp-dark #side-inbox .km-navbar,
-#side-inbox .km-content .km-button */ .km-navbar,
-.km-wp-light .km-navbar,
-.km-wp-dark .km-navbar,
-.km-content .km-button {
-    background: url(Images/pattern9.png);
-    color: #ffffff;
-}
-
-
-#beers-view .item-photo {
-    width: 40px;
-    height: 40px;
-    float: left;
-    //margin: .5em 0;
-    margin-left: 10px;
-    margin-top: 8px;
-    -webkit-box-shadow: 0 1px 3px #333;
-    box-shadow: 0 1px 3px #333;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
-}
-
-#custom-listview .item-title {
-    float: left;
-    font-size: 13px;
-    line-height: 1.4em;
-    margin: .3em 1em 0 .6em;
-    width: 70%;
-}
-#custom-listview .item-info {
-    float: left;
-    font-size: .7em;
-    line-height: 1em;
-    margin: 0 0 0 .95em;
-    width: 75%;
-}
-
-#custom-listview .item-title,
-#custom-listview .item-info {
-    color: #4c2a1b;
-}
-
-#custom-listview .item-info {
-    color: #974d2e;
-}
-
-#custom-listview {
-    margin: 0;
-}
-
-#beers-view .details-link {
-    margin-top: -1em;
-    position: absolute;
-    right: 0.6em;
-    top: 50%;
-}
-
-#beers-view .km-listview .km-list {
-    margin: 0;
-}
-
-#beers-view .km-listview .km-group-title {
-    padding: 0;
-    border-top: 0;
-    box-shadow: none;
-}
-
-#beers-view .km-group-title h2 {
-    margin: 0;
-    padding-top: .2em;
-    text-shadow: none;
-}
-
-#beers-view .km-group-title {
-    color: #974d2e;
-    /*font-weight: normal;
-    font-size: 1em;*/
-    background-image: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.45) 6%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(100, 100, 100, 0)), url(Images/pattern4.png);
-    background-image: -webkit-gradient(linear, 50% 0, 50% 100%, color-stop(0, rgba(255, 255, 255, 0.5)), color-stop(0.06, rgba(255, 255, 255, 0.45)), color-stop(0.5, rgba(255, 255, 255, 0.2)), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(1, rgba(100, 100, 100, 0))), url(Images/pattern4.png);
-}
-
-#beers-view .km-listview .km-list {
-    border-top-color: #dcbe87;
-    background-image: url(Images/pattern8.png);
-}
-.km-tablet .km-ios #beers-view .km-view-title
-{
-    color: #fff;
-    text-shadow: 0 -1px rgba(0,0,0,.5);
-}
-.km-wp .km-group-title .km-text {
-    padding: 0;
-}
-.km-wp .km-group-title .km-text h2 {
-    padding: 0 0 .1em .7em;
-}
-.km-ios7 #beers-view .km-navbar .km-button,
-.km-ios7 #beers-view .km-navbar .km-view-title
-{
-    background: transparent;
-    color: #fff;
-}
-</style>   
+ 
 <div data-role="view" data-title="Test app" data-layout="tabstrip-appearance" data-stretch="true" data-init="mapShow" id="index">
     <div id="map" style="border-collapse: collapse; width:100%;"></div>
 </div>
